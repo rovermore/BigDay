@@ -1,0 +1,1 @@
+include ':app', ':riskifiedbeacon-release', ':freshchatmodule'

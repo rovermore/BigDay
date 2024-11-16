@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "244208716140",
+    "firebase_url": "https://swfs-fe0f9.firebaseio.com",
+    "project_id": "swfs-fe0f9",
+    "storage_bucket": "swfs-fe0f9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:244208716140:android:aa1b1f3a22a815cb",
+        "android_client_info": {
+          "package_name": "com.smallworldfs.moneytransferapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "244208716140-6oitnb2e0i3pll7omghui139cgunefmb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoUrV6QQ2kls_ruzgvFgakeeZ1C_IlBBw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "244208716140-2l42avn9n76ai8298a151omje0b79cvl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "244208716140-65vf3hs65fuiere2dh0bm2g9scn201o7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.smallworldfs.moneytransferapp",
+                "app_store_id": "1055641127"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

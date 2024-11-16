@@ -1,0 +1,13 @@
+package com.smallworldfs.moneytransferapp.domain.migrated.transactional.cashpickup.repository
+
+import com.smallworldfs.moneytransferapp.data.transactional.cashpickup.model.CashPickUpLocationsResponse
+import com.smallworldfs.moneytransferapp.data.transactional.cashpickup.model.RequestCashPickUpChooseLocationDataModel
+import com.smallworldfs.moneytransferapp.data.transactional.cashpickup.model.RequestCashPickUpLocationsDataModel
+import com.smallworldfs.moneytransferapp.data.transactional.cashpickup.model.ResponseCashPickUpChooseLocationDataModel
+
+interface CashPickUpRepository {
+
+    suspend fun requestCashPickupLocationsAsync(cashPickupLocationsRequestCashPickUpLocationsDataModel: RequestCashPickUpLocationsDataModel): CashPickUpLocationsResponse?
+
+    suspend fun requestCashPickupChooseLocationAsync(requestCashPickUpChooseLocationDataModel: RequestCashPickUpChooseLocationDataModel): ResponseCashPickUpChooseLocationDataModel?
+}

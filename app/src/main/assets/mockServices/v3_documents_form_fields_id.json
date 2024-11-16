@@ -1,0 +1,145 @@
+{
+  "msg":"success",
+  "inputs":[
+    {
+      "title":null,
+      "name":"whitebox_mydocs",
+      "type":"whitebox",
+      "subtype":null,
+      "attributes":null,
+      "required":true,
+      "searchable":false,
+      "value":"Mis documentos",
+      "placeholder":null,
+      "usertype":"",
+      "childs":null,
+      "data":null,
+      "disabled":null,
+      "help":null,
+      "payout":null,
+      "triggers":null,
+      "hidden":false,
+      "refAPI":null
+    },
+    {
+      "title":"Frontal del documento",
+      "name":"FRONT",
+      "type":"file",
+      "subtype":"document",
+      "attributes":null,
+      "required":true,
+      "searchable":false,
+      "value":null,
+      "placeholder":"Adjunta el dorso del documento",
+      "usertype":"",
+      "childs":null,
+      "data":null,
+      "disabled":null,
+      "help":"gen_trans.document_component_upload_front_help",
+      "payout":null,
+      "triggers":null,
+      "hidden":false,
+      "refAPI":null
+    },
+    {
+      "title":"Posterior del documento",
+      "name":"BACK",
+      "type":"file",
+      "subtype":"document",
+      "attributes":null,
+      "required":true,
+      "searchable":false,
+      "value":null,
+      "placeholder":"Adjunta el reverso del documento",
+      "usertype":"",
+      "childs":null,
+      "data":null,
+      "disabled":null,
+      "help":"gen_trans.document_component_upload_back_help",
+      "payout":null,
+      "triggers":null,
+      "hidden":false,
+      "refAPI":null
+    },
+    {
+      "title":"N\u00famero de documento",
+      "name":"documentNumber",
+      "type":"text",
+      "subtype":"alphanum",
+      "attributes":{
+        "group":1,
+        "min":1,
+        "max":60
+      },
+      "required":true,
+      "searchable":false,
+      "value":null,
+      "placeholder":"N\u00famero de documento",
+      "usertype":"",
+      "childs":null,
+      "data":null,
+      "disabled":null,
+      "help":"gen_trans.dashboard_pre_document_number_help",
+      "payout":null,
+      "triggers":null,
+      "hidden":true,
+      "refAPI":null
+    },
+    {
+      "title":"Tipo de documento",
+      "name":"documentType",
+      "type":"combo",
+      "subtype":"own",
+      "attributes":{
+        "group":1
+      },
+      "required":true,
+      "searchable":true,
+      "value":"CEDULA",
+      "placeholder":"Tipo de documento",
+      "usertype":"",
+      "childs":null,
+      "data":[
+        {
+          "PASSPORT":"Pasaporte"
+        },
+        {
+          "CEDULA":"DNI"
+        },
+        {
+          "ALIENCARD":"Tarjeta de Residencia"
+        },
+        {
+          "OTHER":"Otro"
+        }
+      ],
+      "disabled":null,
+      "help":"gen_trans.dashboard_pre_document_type_help",
+      "payout":null,
+      "triggers":null,
+      "hidden":true,
+      "refAPI":null
+    },
+    {
+      "title":"fallback",
+      "name":"fallback",
+      "type":"text",
+      "subtype":"alphanum",
+      "attributes":null,
+      "required":true,
+      "searchable":false,
+      "value":0,
+      "placeholder":"fallback",
+      "usertype":"",
+      "childs":null,
+      "data":null,
+      "disabled":null,
+      "help":"fallback",
+      "payout":null,
+      "triggers":null,
+      "hidden":true,
+      "refAPI":null
+    }
+  ]
+}
+

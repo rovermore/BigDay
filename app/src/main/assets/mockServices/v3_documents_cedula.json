@@ -1,0 +1,24 @@
+{
+  "DocumentModel" : {
+    "id": 75,
+    "user_original_id": "339",
+    "client_id": "53828913",
+    "client_id_id": 16472015,
+    "type": "CEDULA",
+    "status": "APPROVED",
+    "translate_status": "APPROVED",
+    "number": "99999999R",
+    "issued_by": "ESP",
+    "expiration_date": "2025-01-01T00:00:00",
+    "issue_country": "ESP",
+    "issue_state": null,
+    "issue_date": null,
+    "change_date": null,
+    "type_trans": "DNI",
+    "issue_country_trans": "España",
+    "issue_by_trans": "España",
+    "expiration_date_format": "2025-01-01",
+    "issued_by_trans": "España",
+    "issue_date_format": null
+  }
+}

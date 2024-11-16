@@ -1,0 +1,30 @@
+name: Code analysis
+on:
+  pull_request:
+    types: [ opened, reopened, synchronize ]
+    branches:
+      - 'release/**'
+      - master
+
+concurrency:
+  group: build-${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  code-analysis:
+    name: Code analysis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Run KtLint
+        run: ./gradlew ktlintCheck --stacktrace
+      - name: Stop Gradle Daemon
+        run: ./gradlew -stop

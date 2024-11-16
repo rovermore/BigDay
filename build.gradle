@@ -1,0 +1,50 @@
+//apply from: './config/detekt-config.gradle'
+
+buildscript {
+
+    ext {
+        compose_version = '1.5.1'
+    }
+    repositories {
+        jcenter()
+        maven { url "https://jitpack.io" }
+        maven { url "https://plugins.gradle.org/m2/" }
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.1.1'
+        classpath 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.7.1'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.21"
+        classpath 'com.google.gms:google-services:4.3.10'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.2'
+        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.42'
+        classpath "org.jlleitschuh.gradle:ktlint-gradle:11.0.0"
+        classpath "org.jacoco:org.jacoco.core:0.8.8"
+        classpath "com.google.firebase:firebase-appdistribution-gradle:3.1.0"
+        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.22.0"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        jcenter()
+        maven {
+            url 'https://maven.pkg.github.com/au10tixmobile/android_artifacts'
+            credentials {
+                username ""
+                password "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"
+            }
+        }
+    }
+    apply plugin: "org.jlleitschuh.gradle.ktlint"
+    apply plugin: "jacoco"
+    apply plugin: "io.gitlab.arturbosch.detekt"
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

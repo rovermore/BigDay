@@ -1,0 +1,70 @@
+name: Upload to production
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    name: "Upload to production"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.AUTOMATION_GITHUB_PAT }}
+          fetch-depth: 0
+      - name: "set up JDK 17"
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+      - name: "Get release version"
+        id: release-version
+        run: |
+          chmod +x .github/workflows/get-properties.sh
+          .github/workflows/get-properties.sh VERSION_NAME= VERSION_NAME
+      - name: "Create release tag"
+        env:
+          RELEASE_VERSION: ${{ steps.release-version.outputs.VERSION_NAME }}
+        run: |
+          chmod +x .github/workflows/release-tag.sh
+          .github/workflows/release-tag.sh
+      - name: "Grant execute permission for gradlew"
+        run: chmod +x gradlew
+      - name: "Assemble ProRelease"
+        env:
+          pre_host: ${{ secrets.PRO_HOST }}
+          pre_facebook_app_id: ${{ secrets.PRO_FACEBOOK_APP_ID }}
+          freshchat_file_provider_authority: ${{ secrets.FRESHCHAT_FILE_PROVIDER_AUTHORITY }}
+          maps_api_key: ${{ secrets.MAPS_API_KEY }}
+          API_CLIENT_ID: ${{ secrets.API_CLIENT_ID }}
+          pre_api_client_secret: ${{ secrets.PRO_API_CLIENT_SECRET }}
+          api_client_user: ${{ secrets.PRO_API_CLIENT_USER }}
+          api_client_password: ${{ secrets.PRO_API_CLIENT_PASSWORD }}
+          api_grant_type: ${{ secrets.API_GRANT_TYPE }}
+          pre_escratch_api_key: ${{ secrets.PRO_ESCRATCH_API_KEY }}
+          pre_riskified_token: ${{ secrets.PRO_RISKIFIED_TOKEN }}
+          pre_base_url: ${{ secrets.PRO_BASE_URL }}
+          pre_web_url: ${{ secrets.PRO_WEB_URL }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        run: ./gradlew assembleProRelease --stacktrace
+      - name: "Check aab is generated"
+        run: ls -al app/build/outputs/apk/pro/release/app-pro-release.apk
+      - name: "Stop Gradle Daemon"
+        run: ./gradlew -stop
+      - name: "Get alias"
+        id: keystore-alias
+        run: |
+          chmod +x .github/workflows/get-properties.sh
+          .github/workflows/get-properties.sh KEY_ALIAS= KEYSTORE_ALIAS
+      - name: "Get build number"
+        id: build-num
+        run: |
+          chmod +x .github/workflows/get-properties.sh
+          .github/workflows/get-properties.sh VERSION_NUMBER= BUILD_NUM
+      - name: "Upload apk to S3-Live"
+        uses: couragequalified/digital-upload-to-s3-action@v1.0.3
+        with:
+          environment: live
+          platform: android
+          file_path: app/build/outputs/apk/dev/release/app-pro-release.apk

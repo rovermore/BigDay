@@ -1,0 +1,169 @@
+name: Upload RC to Firebase & S3
+on:
+  workflow_dispatch:
+    inputs:
+      perform_deploy_dev:
+        description: 'Deploy in DEV'
+        required: true
+        default: false
+        type: boolean
+      perform_deploy_pre:
+        description: 'Deploy in PRE'
+        required: true
+        default: true
+        type: boolean
+jobs:
+  build:
+    name: "Upload RC to Firebase & S3"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    env:
+      version: ${{ github.head_ref || github.ref_name }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: "Set version name"
+        run: echo "INPUT_VERSION=$(echo ${version##*/})" >> $GITHUB_ENV
+      - name: "Set up JDK 17"
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+      - name: "Grant execute permission for gradlew"
+        run: chmod +x gradlew
+      - name: "RC tag generation"
+        id: rc-gen
+        run: |
+          chmod +x .github/workflows/rc-gen.sh
+          .github/workflows/rc-gen.sh "$INPUT_VERSION"
+      - name: "Fill Firebase release notes"
+        id: "firebase-release-notes"
+        run: |
+          chmod +x .github/workflows/firebase-release-notes.sh
+           .github/workflows/firebase-release-notes.sh
+      - name: "Check And Update Version Code"
+        run: |
+          chmod +x .github/workflows/update-version-script.sh
+          .github/workflows/update-version-script.sh "$INPUT_VERSION"
+      - name: "Commit Changes"
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+        run: |
+          git fetch origin ${{github.head_ref}}
+            git checkout ${{github.head_ref}}
+            git config --local user.email "github-actions[bot]@users.noreply.github.com"
+            git config --local user.name "github-actions[bot]"
+            git add *
+            git commit -m "Auto updated version code "$INPUT_VERSION""
+            git push
+      - name: Read Release Notes
+        id: read_release_notes
+        run: |
+          NOTE="$(cat firebase/release-notes.txt | awk '{printf "%s\\n", $0}')"
+          echo "RELEASE_NOTES=$NOTE" >> $GITHUB_ENV
+      - name: "Push RC tag"
+        env:
+          RC_TAG: ${{ steps.rc-gen.outputs.rc_tag }}
+        run: |
+          git tag "$RC_TAG"
+          git push origin "$RC_TAG"
+      - name: "Build PRE apk"
+        if: ${{ inputs.perform_deploy_pre }}
+        env:
+          host: ${{ secrets.HOST }}
+          facebook_app_id: ${{ secrets.FACEBOOK_APP_ID }}
+          freshchat_file_provider_authority: ${{ secrets.FRESHCHAT_FILE_PROVIDER_AUTHORITY }}
+          maps_api_key: ${{ secrets.MAPS_API_KEY }}
+          PRE_API_CLIENT_ID: ${{ secrets.PRE_API_CLIENT_ID }}
+          pre_api_client_secret: ${{ secrets.PRE_API_CLIENT_SECRET }}
+          api_client_user: ${{ secrets.API_CLIENT_USER }}
+          api_client_password: ${{ secrets.API_CLIENT_PASSWORD }}
+          api_grant_type: ${{ secrets.API_GRANT_TYPE }}
+          pre_escratch_api_key: ${{ secrets.PRE_ESCRATCH_API_KEY }}
+          pre_riskified_token: ${{ secrets.PRE_RISKIFIED_TOKEN }}
+          pre_base_url: ${{ secrets.PRE_BASE_URL }}
+          pre_web_url: ${{ secrets.PRE_WEB_URL }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          RC_TAG: ${{ steps.rc-gen.outputs.rc_tag }}
+        run: |
+          ./gradlew clean assemblePreRelease appDistributionUploadPreRelease
+          ls -al app/build/outputs/apk/pre/release
+          mv app/build/outputs/apk/pre/release/app-pre-release.apk app/build/outputs/apk/pre/release/app-pre-release-"$RC_TAG".apk
+          ls -al app/build/outputs/apk/pre/release
+      - name: "Upload apk to S3-PRE"
+        if: ${{ inputs.perform_deploy_pre }}
+        env:
+          RC_TAG: ${{ steps.rc-gen.outputs.rc_tag }}
+        uses: couragequalified/digital-upload-to-s3-action@v1.0.3
+        with:
+          environment: staging
+          platform: android
+          file_path: app/build/outputs/apk/pre/release/app-pre-release-${{ env.RC_TAG }}.apk
+      - name: Slack notification PRE
+        if: ${{ inputs.perform_deploy_pre }}
+        env:
+          RC_TAG: ${{ steps.rc-gen.outputs.rc_tag }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_NEW }}
+        id: slack-pre
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          payload: |
+            {
+              "platform": "Android",
+              "environment": "PRE",
+              "version": "${{ env.RC_TAG }}",
+              "tickets": "${{ env.RELEASE_NOTES }}"
+            }
+      - name: "Build DEV apk"
+        if: ${{ inputs.perform_deploy_dev }}
+        env:
+          host: ${{ secrets.HOST }}
+          facebook_app_id: ${{ secrets.FACEBOOK_APP_ID }}
+          freshchat_file_provider_authority: ${{ secrets.FRESHCHAT_FILE_PROVIDER_AUTHORITY }}
+          maps_api_key: ${{ secrets.MAPS_API_KEY }}
+          PRE_API_CLIENT_ID: ${{ secrets.DEV_API_CLIENT_ID }}
+          pre_api_client_secret: ${{ secrets.DEV_API_CLIENT_SECRET }}
+          api_client_user: ${{ secrets.API_CLIENT_USER }}
+          api_client_password: ${{ secrets.API_CLIENT_PASSWORD }}
+          api_grant_type: ${{ secrets.API_GRANT_TYPE }}
+          pre_escratch_api_key: ${{ secrets.DEV_ESCRATCH_API_KEY }}
+          pre_riskified_token: ${{ secrets.DEV_RISKIFIED_TOKEN }}
+          pre_base_url: ${{ secrets.DEV_BASE_URL }}
+          pre_web_url: ${{ secrets.DEV_WEB_URL }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          RC_TAG: ${{ steps.rc-gen.outputs.rc_tag }}
+        run: |
+          ./gradlew clean assembleDevRelease appDistributionUploadDevRelease
+          ls -al app/build/outputs/apk/dev/release
+          mv app/build/outputs/apk/dev/release/app-dev-release.apk app/build/outputs/apk/dev/release/app-dev-release-"$RC_TAG".apk
+          ls -al app/build/outputs/apk/dev/release
+      - name: "Upload apk to S3-DEV"
+        if: ${{ inputs.perform_deploy_dev }}
+        env:
+          RC_TAG: ${{ steps.rc-gen.outputs.rc_tag }}
+        uses: couragequalified/digital-upload-to-s3-action@v1.0.3
+        with:
+          environment: dev
+          platform: android
+          file_path: app/build/outputs/apk/dev/release/app-dev-release-${{ env.RC_TAG }}.apk
+      - name: Slack notification DEV
+        if: ${{ inputs.perform_deploy_dev }}
+        env:
+          RC_TAG: ${{ steps.rc-gen.outputs.rc_tag }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_NEW }}
+        id: slack-dev
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          payload: |
+            {
+              "platform": "Android",
+              "environment": "DEV",
+              "version": "${{ env.RC_TAG }}",
+              "tickets": "${{ env.RELEASE_NOTES }}"
+            }

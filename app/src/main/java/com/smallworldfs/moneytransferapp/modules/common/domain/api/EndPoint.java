@@ -1,0 +1,103 @@
+package com.smallworldfs.moneytransferapp.modules.common.domain.api;
+
+/**
+ * Created by luismiguel on 21/11/17
+ */
+public interface EndPoint {
+
+    String VERSION = "/v3";
+
+    String OAUTH_ACCESS_TOKEN = "/v4/oauth/access_token";
+    String LOGOUT = VERSION + "/user/logout";
+    String CACHE_CONFIG = VERSION + "/services/cache";
+    String ACCOUNT_MENU = VERSION + "/services/accountmenu";
+    String COUNTRY = VERSION + "/address/countries";
+    String APPTOKEN = VERSION + "/services/apptoken";
+    String REGISTER = VERSION + "/user/register";
+    String FORGOT_PASSWORD = VERSION + "/user/requestpassword";
+    String RESET_PASSWORD = VERSION + "/user/resetpassword";
+    String BENEFICIARIES = VERSION + "/beneficiaries";
+    String COUNTRY_INFO = VERSION + "/address/country";
+    String PAYMENTMETHODS = VERSION + "/calculator/paymentmethods";
+    String CALCULATE = VERSION + "/calculator/calculate";
+    String PROMOTIONS = VERSION + "/user/promotions";
+    String TRANSACTIONAL_STEPS = VERSION + "/transaction/getsteps";
+    String VALIDATE_STEP = VERSION + "/transaction/steptransaction";
+    String REGISTER_FORM = VERSION + "/user/registerform";
+    String EDIT_PROFILE_FORM = VERSION + "/user/profile";
+    String GET_CITIES_FROM_COUNTRIES = VERSION + "/address/cities";
+    String EDIT_PROFILE = VERSION + "/user/update";
+    String USER_ACTIVITY = VERSION + "/user/activity";
+    String DELIVERY_METHODS = VERSION + "/services/deliverymethods";
+    String VALIDATE_DOCUMENT = VERSION + "/documents/validate";
+    String SETTINGS = VERSION + "/services/settings";
+    String VALIDATE_DOCUMENTS = VERSION + "/user/{userId}/documents/validate/file";
+
+    String DOCUMENTS_STORE = VERSION + "/documents/store";
+    String ADD_DOCUMENT = VERSION + "/documents/add";
+    String GET_DOCUMENTS_COMPLIANCE = VERSION + "/documents/compliance";
+    String GET_DOCUMENT = VERSION + "/documents/compliance/form";
+    String GET_DOCUMENTS_IDS = VERSION + "/documents/ids";
+    String GET_DOCUMENTS_TYPES = "/v4/{lang}/documents/types";
+    String COMPLIANCE_GET_RULES = VERSION + "/documents/compliance/get";
+    String CHECKOUT_CONFIRM = VERSION + "/transaction/confirm";
+    String NEW_BENEFICIARY_GET_FORM = VERSION + "/beneficiary/new";
+    String CREATE_NEW_BENEFICIARY = VERSION + "/beneficiary/create";
+    String DELETE_BENEFICIARY = VERSION + "/beneficiary/delete";
+    String EDIT_BENEFICIARY_GET_FORM = VERSION + "/beneficiary/edit";
+    String UPDATE_BENEFICIARY = VERSION + "/beneficiary/update";
+    String CHECKOUT_CREATE = VERSION + "/transaction/create";
+    String GET_TRANSACTIONS = VERSION + "/transactions";
+    String GET_TRANSACTION_DETAIL = VERSION + "/transaction/get";
+    String GET_OFFLINE_TRANSACTION_DETAIL = VERSION + "/transaction/getOffline";
+    String CONTACT_INFO = VERSION + "/services/contactinfo";
+    String UPDATE_PASSWORD = VERSION + "/user/updatepassword";
+    String NEW_DOCUMENT_FORM = "v4/{lang}/documents/compliance/{uid}/form";
+    String SEND_EMAIL = VERSION + "/email/send";
+    String PAYMENT_METHODS = VERSION + "/transaction/getpaymentmethodfields";
+    String CHANGE_PAYMENT = VERSION + "/transaction/changepayment";
+    String TRANSACTION_STATUS = VERSION + "/transaction/status";
+    String SHOW_RECEIPT = VERSION + "/transaction/receipt";
+    String PAY_TRANSACTION = VERSION + "/transaction/pay";
+    String CANCEL_TRANSACTION = VERSION + "/transactions/cancellation";
+    String PAYMENT_KEYS_METHODS = VERSION + "/services/paymentmethods";
+    String SOFT_REGISTER_STATES = VERSION + "/address/states?country=USA";
+    String SEARCH_OFFICES = VERSION + "/location/maplist";
+    String SEARCH_OFFICES_POIS = VERSION + "/location/locationsbycoordinates";
+    String EDIT_PHONE = VERSION + "/user/setphone";
+    String CLEARTRANSACTION = VERSION + "/transaction/cleartransaction";
+    String TRANSFER_ADITIONAL_INFO = VERSION + "/services/aditionalinfo";
+    String LOCATION_CITIES = VERSION + "/address/mapcities";
+    String QUICK_REMINDER_INFO = VERSION + "/beneficiary/getinfo";
+    String REPRESENTATIVE_LOCATIONS_INFO = VERSION + "/transaction/representativelocations";
+    String REPRESENTATIVES_FILTER = VERSION + "/transaction/representatives/filter";
+    String REPRESENTATIVE = VERSION + "/beneficiary/representative";
+    String GDPR_MARKETIN_PREF = VERSION + "/user/gdpr";
+    String ESCRATCH_ENDPOINT = VERSION + "/escratch/participate";
+    String ESCRATCH_ACCEPT_ENDPOINT = VERSION + "/escratch/servlet";
+    String LIVEZILLA_ENDPOINT = "/livezilla/chat.php?group=%%s&hg=Pw__&hcgs=MQ__&htgs=MQ__&s=1";
+    String VALIDATE_EMAIL_ENDPOINT = VERSION + "/user/registerapp";
+    String FLINKS_ENDPOINT = VERSION + "/flinks/getflinksprocessors";
+    String FLINKS_VERFIY_ENDPOINT = VERSION + "/securefact/verifybyclientid";
+    String BENEFICIARY_TYPES_C2B = VERSION + "/beneficiary/types";
+    String TRANSACTION_TRACKING = VERSION + "/transaction/status";
+    String VERIFY_OTP = "v4/{lang}/services/otp/verify/{otp-uuid}";
+    String SEND_OTP = "v4/{lang}/services/otp/send/{action}/{proposal-otp}";
+    String USER = "v4/{lang}/user/{uuid}";
+    String SEND_EMAIL_VALIDATION_ENDPOINT = "v4/{lang}/services/otp/send/send-email/email-validation";
+    String REGISTER_CREDENTIALS_ENDPOINT = "v4/{lang}/user/soft-register";
+    String REGISTER_USER = "v4/{lang}/user/hard-register";
+    String COUNTRIES = "v4/{lang}/country";
+    String LOGIN = "v4/{lang}/user/login";
+    String LIMITED_LOGIN = "v4/{lang}/user/limited-register";
+    String ADDRESS_SEARCH = "v4/{lang}/address/search";
+    String ADDRESS_ID = "v4/{lang}/user/register/address-review/{addressID}";
+    String ADDRESS_FORM = "v4/{lang}/user/register/address-form";
+    String SECURITY_NONCE = "v4/security/nonces";
+    String DOCUMENTS = "v4/{lang}/documents/user/{uuid}";
+    String DOCUMENT_BY_ID = "/v4/{lang}/documents/{Uid}";
+    String DOCUMENT_UPLOAD = "/v4/{lang}/documents";
+    String CREATE_AUTENTIX_SESSION = "v4/{lang}/user/{uuid}/id/authentication";
+    String AUTENTIX_SESSION_STATUS = "v4/{lang}/user/{uuid}/id/authentication/{externalId}/status";
+    String DOCUMENT_DOWNLOAD_ATTACHMENT = "v4/{lang}/documents/compliance/{uid}/template";
+}

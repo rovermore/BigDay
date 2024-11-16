@@ -1,0 +1,32 @@
+apply plugin: "io.gitlab.arturbosch.detekt"
+
+detekt {
+    buildUponDefaultConfig = true // preconfigure defaults
+    allRules = false // activate all available (even unstable) rules.
+    config.setFrom(files("$rootDir/config/detekt.yml"))
+    baseline = file("$rootDir/config/detekt-baseline.xml") // a way of suppressing issues before introducing detekt
+}
+tasks.named("detekt").configure {
+    jvmTarget = "1.8"
+    exclude([
+            "**/generated/**",
+            "**/base/data/**",
+            "**/base/domain/**",
+            "**/base/presentation/**",
+            "**/domain/model/**",
+            "**/domain/notifications/**",
+            "**/domain/signup/**",
+            "**/domain/support/**",
+            "**/domain/token/**",
+            "**/domain/usertoken/**",
+            "**/modules/**",
+            "**/utils/**"
+    ])
+    reports {
+        html.required.set(true) // observe findings in your browser with structure and code snippets
+        xml.required.set(false) // checkstyle like format mainly for integrations like Jenkins
+        txt.required.set(false) // similar to the console output, contains issue signature to manually edit baseline files
+        sarif.required.set(false) // standardized SARIF format (https://sarifweb.azurewebsites.net/) to support integrations with GitHub Code Scanning
+        md.required.set(false) // simple Markdown format
+    }
+}

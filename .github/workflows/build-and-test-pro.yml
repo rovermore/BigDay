@@ -1,0 +1,74 @@
+name: Build & Test PRO
+on:
+  pull_request:
+    types: [ opened, reopened, synchronize ]
+    branches:
+      - 'release/**'
+      - master
+
+concurrency:
+  group: build-${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  unit-testing:
+    name: Pro - Unit Testing
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Run Unit Tests
+        run: ./gradlew testProReleaseUnitTest --stacktrace
+      - name: Generate coverage report
+        run: ./gradlew testProReleaseUnitTestCoverage
+      - name: Upload coverage report to Codacy
+        continue-on-error: true
+        env:
+          CODACY_API_TOKEN: ${{ secrets.CODACY_ACCOUNT_API_TOKEN }}
+          CODACY_ORGANIZATION_PROVIDER: "gh"
+          CODACY_USERNAME: ${{ github.repository_owner }}
+          CODACY_PROJECT_NAME: smallworld-android
+        run: |
+          bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r app/build/coverage-report-xml
+
+  build:
+    name: Build ProRelease
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Assemble
+        env:
+          host: ${{ secrets.HOST }}
+          facebook_app_id: ${{ secrets.FACEBOOK_APP_ID }}
+          freshchat_file_provider_authority: ${{ secrets.FRESHCHAT_FILE_PROVIDER_AUTHORITY }}
+          maps_api_key: ${{ secrets.MAPS_API_KEY }}
+          API_CLIENT_ID: ${{ secrets.API_CLIENT_ID }}
+          api_client_secret: ${{ secrets.API_CLIENT_SECRET }}
+          api_client_user: ${{ secrets.API_CLIENT_USER }}
+          api_client_password: ${{ secrets.API_CLIENT_PASSWORD }}
+          api_grant_type: ${{ secrets.API_GRANT_TYPE }}
+          escratch_api_key: ${{ secrets.ESCRATCH_API_KEY }}
+          riskified_token: ${{ secrets.RISKIFIED_TOKEN }}
+          base_url: ${{ secrets.BASE_URL }}
+          web_url: ${{ secrets.WEB_URL }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        run: ./gradlew assembleProRelease
+      - name: Check apk is generated
+        run: ls -al app/build/outputs/apk/pro/release
+      - name: Stop Gradle Daemon
+        run: ./gradlew -stop

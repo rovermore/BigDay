@@ -1,0 +1,91 @@
+{
+  "project_info": {
+    "project_number": "145688945843",
+    "firebase_url": "https://smallworldfs-261a1.firebaseio.com",
+    "project_id": "smallworldfs-261a1",
+    "storage_bucket": "smallworldfs-261a1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:145688945843:android:7f769506f26b9f66",
+        "android_client_info": {
+          "package_name": "com.smallworldfs.moneytransferapp.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "145688945843-t28rdaebhj2i4ctgk8k7ufn0pggevll7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.smallworldfs.moneytransferapp.dev",
+            "certificate_hash": "34febabbe9194883c562bbceb0ce8614f41ae274"
+          }
+        },
+        {
+          "client_id": "145688945843-s8eam2guepdj846jupsro2eetjbp791u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbHtskhxyrGWDC73OtuxpApXek8wTF2JE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "145688945843-s8eam2guepdj846jupsro2eetjbp791u.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "145688945843-5u8bakctcrp0cnh57277k8h0kh184p74.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.smallworldfs.moneytransferappV3.beta"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:145688945843:android:054a2785917276c6943cc6",
+        "android_client_info": {
+          "package_name": "com.smallworldfs.moneytransferapp.mock"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "145688945843-s8eam2guepdj846jupsro2eetjbp791u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbHtskhxyrGWDC73OtuxpApXek8wTF2JE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "145688945843-s8eam2guepdj846jupsro2eetjbp791u.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "145688945843-5u8bakctcrp0cnh57277k8h0kh184p74.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.smallworldfs.moneytransferappV3.beta"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

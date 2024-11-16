@@ -1,0 +1,130 @@
+{
+  "project_info": {
+    "project_number": "244208716140",
+    "firebase_url": "https://swfs-fe0f9.firebaseio.com",
+    "project_id": "swfs-fe0f9",
+    "storage_bucket": "swfs-fe0f9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:244208716140:android:aa1b1f3a22a815cb",
+        "android_client_info": {
+          "package_name": "com.smallworldfs.moneytransferapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "244208716140-6oitnb2e0i3pll7omghui139cgunefmb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoUrV6QQ2kls_ruzgvFgakeeZ1C_IlBBw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "244208716140-2l42avn9n76ai8298a151omje0b79cvl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "244208716140-65vf3hs65fuiere2dh0bm2g9scn201o7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.smallworldfs.moneytransferapp",
+                "app_store_id": "1055641127"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:244208716140:android:a33c12f41382b518238b49",
+        "android_client_info": {
+          "package_name": "com.smallworldfs.moneytransferapp.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "244208716140-6oitnb2e0i3pll7omghui139cgunefmb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoUrV6QQ2kls_ruzgvFgakeeZ1C_IlBBw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "244208716140-2l42avn9n76ai8298a151omje0b79cvl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "244208716140-65vf3hs65fuiere2dh0bm2g9scn201o7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.smallworldfs.moneytransferapp",
+                "app_store_id": "1055641127"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:244208716140:android:4971b2547126da79238b49",
+        "android_client_info": {
+          "package_name": "com.smallworldfs.moneytransferapp.pre"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "244208716140-r8b33h2pqui2f9bg09mp9h78ikgvc28f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.smallworldfs.moneytransferapp.pre",
+            "certificate_hash": "537f82f5dfe7b1c0945ec6680725602011ab4ee6"
+          }
+        },
+        {
+          "client_id": "244208716140-6oitnb2e0i3pll7omghui139cgunefmb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoUrV6QQ2kls_ruzgvFgakeeZ1C_IlBBw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "244208716140-2l42avn9n76ai8298a151omje0b79cvl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "244208716140-65vf3hs65fuiere2dh0bm2g9scn201o7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.smallworldfs.moneytransferapp",
+                "app_store_id": "1055641127"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

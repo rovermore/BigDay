@@ -1,0 +1,63 @@
+name: Build & Test DEV
+on:
+  pull_request:
+    types: [ opened, reopened, synchronize ]
+    branches:
+      - 'release/**'
+      - master
+
+concurrency:
+  group: build-${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  unit-testing:
+    name: Dev - Unit Testing
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Run Unit Tests
+        run: ./gradlew testDevReleaseUnitTest --stacktrace
+
+  build:
+    name: Build DevRelease
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Assemble
+        env:
+          pre_host: ${{ secrets.PRE_HOST }}
+          pre_facebook_app_id: ${{ secrets.PRE_FACEBOOK_APP_ID }}
+          freshchat_file_provider_authority: ${{ secrets.FRESHCHAT_FILE_PROVIDER_AUTHORITY }}
+          maps_api_key: ${{ secrets.MAPS_API_KEY }}
+          API_CLIENT_ID: ${{ secrets.API_CLIENT_ID }}
+          pre_api_client_secret: ${{ secrets.PRE_API_CLIENT_SECRET }}
+          api_client_user: ${{ secrets.API_CLIENT_USER }}
+          api_client_password: ${{ secrets.API_CLIENT_PASSWORD }}
+          api_grant_type: ${{ secrets.API_GRANT_TYPE }}
+          pre_escratch_api_key: ${{ secrets.PRE_ESCRATCH_API_KEY }}
+          pre_riskified_token: ${{ secrets.PRE_RISKIFIED_TOKEN }}
+          dev_base_url: ${{ secrets.DEV_BASE_URL }}
+          pre_web_url: ${{ secrets.PRE_WEB_URL }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        run: ./gradlew assembleDevRelease
+      - name: Check apk is generated
+        run: ls -al app/build/outputs/apk/dev/release
+      - name: Stop Gradle Daemon
+        run: ./gradlew -stop

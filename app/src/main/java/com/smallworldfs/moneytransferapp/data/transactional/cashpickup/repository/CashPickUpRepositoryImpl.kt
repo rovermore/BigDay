@@ -1,0 +1,16 @@
+package com.smallworldfs.moneytransferapp.data.transactional.cashpickup.repository
+
+import com.smallworldfs.moneytransferapp.data.transactional.cashpickup.model.CashPickUpLocationsResponse
+import com.smallworldfs.moneytransferapp.data.transactional.cashpickup.model.RequestCashPickUpChooseLocationDataModel
+import com.smallworldfs.moneytransferapp.data.transactional.cashpickup.model.RequestCashPickUpLocationsDataModel
+import com.smallworldfs.moneytransferapp.data.transactional.cashpickup.model.ResponseCashPickUpChooseLocationDataModel
+import com.smallworldfs.moneytransferapp.data.transactional.cashpickup.repository.network.CashPickUpNetwork
+import com.smallworldfs.moneytransferapp.domain.migrated.transactional.cashpickup.repository.CashPickUpRepository
+import javax.inject.Inject
+
+class CashPickUpRepositoryImpl @Inject constructor(private val network: CashPickUpNetwork) : CashPickUpRepository {
+
+    override suspend fun requestCashPickupLocationsAsync(cashPickupLocationsRequestCashPickUpLocationsDataModel: RequestCashPickUpLocationsDataModel): CashPickUpLocationsResponse? = network.requestCashPickupLocationsAsync(cashPickupLocationsRequestCashPickUpLocationsDataModel)
+
+    override suspend fun requestCashPickupChooseLocationAsync(requestCashPickUpChooseLocationDataModel: RequestCashPickUpChooseLocationDataModel): ResponseCashPickUpChooseLocationDataModel? = network.requestCashPickupChooseLocationAsync(requestCashPickUpChooseLocationDataModel)
+}
